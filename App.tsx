@@ -1,45 +1,68 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+const HomeScreen = () => (
+  <View style={styles.screen}>
+    <Text style={styles.text}>Weather Tiles Go Here</Text>
+  </View>
+);
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const LauncherSimulatorScreen = () => (
+  <View style={styles.screen}>
+    <Text style={styles.text}>Widget Testing Area</Text>
+  </View>
+);
 
+const MenuScreen = () => (
+  <View style={styles.screen}>
+    <Text style={styles.text}>App Settings & Menu</Text>
+  </View>
+);
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: '#007AFF',
+          tabBarInactiveTintColor: 'gray',
+          headerShown: true,
+        }}
+      >
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ tabBarIcon: () => <Text style={{fontSize: 20}}>🏠</Text> }}
+        />
+        <Tab.Screen 
+          name="Simulator" 
+          component={LauncherSimulatorScreen} 
+          options={{ tabBarIcon: () => <Text style={{fontSize: 20}}>🚀</Text> }}
+        />
+        <Tab.Screen 
+          name="Menu" 
+          component={MenuScreen} 
+          options={{ tabBarIcon: () => <Text style={{fontSize: 20}}>☰</Text> }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F2F2F7',
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
-
-export default App;
